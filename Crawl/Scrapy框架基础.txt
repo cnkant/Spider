@@ -1,0 +1,6 @@
+startproject 创建新工程
+genspider 创建一个爬虫
+settings 获取爬虫配置信息
+crawl 运行一个爬虫
+list 列出工程中的所有爬虫
+shell 启动url调试命令行

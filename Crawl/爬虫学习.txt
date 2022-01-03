@@ -1,0 +1,108 @@
+﻿一、scrapy
+    1、创建项目
+    scrapy startproject 项目名
+    2、介绍
+    项目名/
+        scrapy.cfg # 网上部署配置文件，很少用
+        项目名/ # 项目的Python模块，从这里加入自己的代码
+            _init_.py
+            items.py  # 存储要爬的内容
+            pipelines.py # item内容下载完需要通过的管道
+            settings.py # 项目配置
+            spiders/ # 放置spider代码的目录
+                _init_.py
+    3、命令
+    创建爬虫scrapy genspider -t basic/crawl(默认是basic) 名字 网址（不加引号）
+    basic和crawl是爬虫模板，如果使用basic模板，-t和模板名字可以省略，t：template
+
+    4、运行爬虫
+    scrapy crawl 爬虫名字（先进根目录）
+
+    5、调试
+    cmd运行以下命令
+    scrapy shell "你的url"
+二、库
+pip install pyquery
+pip install bs4
+pip install lxml
+以上为解析页面需要用到的库
+pip install builtwith   # 识别网站用的什么技术
+res=builtwith.builtwith(url)
+pip install selenium  # 模拟人工操作浏览器
+pip install scrapy    # 爬虫框架
+pip install requests
+以上为爬虫用到的库
+uuid库——根据电脑CPU型号等返回一串随机字符，每次返回值都不相同
+
+三、反爬虫机制（六种）
+1、Headers检测
+    检测User-Agent或者referer，referer为访问来源
+2、用户频率限制
+    频繁访问封访问者IP
+3、网站数据加载
+    Ajax交互，通过接口在json文件中提供数据
+4、网页数据加密
+    通过JS对一些cookie参数加密
+5、验证码识别
+    选择或者滑动图像
+6、字体反爬虫
+    自己创造出一套字体映射关系，之后在前端中渲染出来
+
+四、方法
+    1、request
+    post方法，表单提交用data；get方法用params
+    requests.session()   # 维持会话状态
+        session=requests.session()
+        session.headers=headers
+    verify=False    # 关闭证书验证，用于HTTPS
+    IP代理
+        proxies=proxies
+    超时处理
+        timeout
+    post方法
+        requests.post(url,files=files)
+        files的三个参数
+            （1）文件名，文件
+            （2）文件格式
+            （3）额外参数，可有可无
+2、urllib
+    from urllib import parse
+    （1）parse.urljoin
+        连接两个url，如url1="http://www.baidu.com"，url2="/123.jpg"
+        parse.urljoin(url1,url2)为"http://www.baidu.com/123.jpg"
+    （2）parse.quote
+        将链接中的汉字转码为浏览器识别的编码，parse.quote(...)
+        parse.unquote(...)恢复成汉字
+    （3）parse.urlsplit
+        将链接分块，parse.urlsplit(url),只显示链接中含有的参数
+    （4）parse.urlparse
+        将链接分块，parse.urlparse(url),显示所有的参数，不管在链接中是否存在
+五、HTTP状态码
+    （1）2**——爬取到内容
+        200：OK
+        206：Partial Content
+    （2）3**——爬取到内容
+        跳转或者重定向
+    （3）4**——爬虫代码写错了
+        401：Unauthorized 需要身份验证，例如输入用户名和密码
+        403：Forbidden IP地址被封
+        404：Not Found 页面丢失
+        405：Method Not Allowed 请求中的方法被禁止
+        408：Request Time-out 访问超时
+    （4）5**——爬虫代码正确，服务器自身的问题
+六、数据库
+    pip install sqlalchemy
+    pip install pymysql
+七、多线程多进程
+    （1）线程池
+        Python没有内置的很好的线程池，推荐一个很好的库
+        pip install threadpool
+    （2）异步请求库
+        pip install aiohttp
+八、JS破解
+    pip3 install PyExecJS   # 运行JS的库
+九、验证码识别
+    安装Tesseract-OCR
+    pip install pytesseract # 简单数字英文验证码识别包，配合Tesseract-OCR使用
+
+    Pytorch、Tensorflow深度学习框架，简单点的就看sklearn（推荐教程：吴恩达视频教程---西瓜书）
